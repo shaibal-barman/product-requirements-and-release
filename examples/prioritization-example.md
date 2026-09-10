@@ -1,47 +1,45 @@
-# Prioritization Example — Deciding What Needs Attention First
+# Prioritization Record — Three Competing Issues
 
-This is a generalized example of how I compared product and service issues when several things needed attention at the same time.
+A repeated detection problem, an escalation-ownership gap, and a one-time setup request were competing for attention. I compared them by the customer result at risk, recurrence, available workaround, consequence of delay, and team dependency.
 
-I did not use a score just to make the decision look precise. I looked at the customer consequence, how often the issue was happening, whether there was a workable alternative, and what would happen if we delayed it.
+I did not add a numerical score that implied more certainty than the evidence supported. I recorded the reason for the order so another person could challenge or approve it.
 
-## Three issues under review
+## Issues and decisions
 
-| Issue | Customer impact | Recurrence | Workaround | Operational consequence | Priority |
-| --- | --- | --- | --- | --- | --- |
-| Person or vehicle detection is wrong in repeated customer scenarios | High | Repeated | Limited | Can affect the monitoring outcome and create repeat complaints | **1 — Fix first** |
-| Ownership is unclear during a recurring service escalation | Medium to high | Repeated | Manual follow-up | Slows resolution and creates unnecessary handoffs | **2 — Address next** |
-| A one-off request can be handled with the current setup | Low | Isolated | Available | Little immediate effect on service delivery | **3 — Schedule later** |
+| Issue | Evidence available | Consequence of delay | Current workaround | Decision |
+| --- | --- | --- | --- | --- |
+| Person or vehicle result does not match the reviewed scene | The same failure pattern appears in more than one customer case | Monitoring staff continue receiving an incorrect result, and the complaint can return | Manually review each case; the returned detection remains wrong | **Priority 1 — Technical review and retest** |
+| An escalation moves between teams without one named owner | The response waits during handoffs because responsibility is not assigned | Resolution slows and the customer waits for an update | A supervisor follows up with each team manually | **Priority 2 — Assign ownership and update the SOP** |
+| A one-time setup request already has a working alternative | The request has appeared once, and the current configuration delivers the required outcome | No customer outcome is blocked | Use the existing configuration | **Priority 3 — Document and revisit only if it repeats** |
 
-## Why the first issue moved ahead
+## Why the detection issue came first
 
-The detection problem affected the result the customer was depending on. It was not an isolated preference, and the available workaround was limited. Leaving it unresolved also meant the same type of issue could keep returning through support and operations.
+The detection mismatch affected the result the customer and monitoring team relied on. It had appeared in more than one case, and manual review did not correct the system output. The next action needed Product, Engineering, and QA to review the failure and retest the same case type.
 
-That combination made it more important than a request that was inconvenient but still had a usable workaround.
+## Why the ownership issue came second
 
-## Why the second issue still mattered
+The escalation problem delayed the response, but it did not require a product change. Naming one owner, updating the escalation path, and checking whether handoffs continued addressed the cause without adding an Engineering item.
 
-An ownership problem may not require a product change, but repeated confusion during escalation still affects the customer experience. In this case, the better response could be a clearer SOP, escalation path, or responsibility split rather than engineering work.
+## Why the one-time request stayed third
 
-The important part was not forcing every recurring problem into the product backlog.
+The request did not block the required outcome, had not repeated, and had a working configuration. I kept it documented so the decision could change if the workaround stopped working or the request returned.
 
-## What I checked before changing the order
+## Questions I used before setting the order
 
-- How many customers or workflows were affected?
-- Was the issue recurring or isolated?
-- Did it block the expected customer outcome?
-- Was there a reliable workaround?
-- Would delaying it create more support or operational effort?
-- Did another team or dependency need to be ready first?
-- Was the proposed response actually a product change, or would a service/process fix solve it better?
+- Which required customer result is blocked?
+- Has the same failure appeared in more than one case?
+- Does the workaround fully deliver the required result, or only reduce the immediate effect?
+- What will the customer or operations team experience if the issue waits?
+- Does the response require a product change, or can configuration, process, ownership, or communication resolve it?
+- Which team or dependency must be available before work can start?
+- What evidence will show that the issue is closed?
 
-## Decision record
+## Action record
 
-**Priority 1:** Repeated detection issue — move into technical review and retest against the original customer scenarios.
+| Priority | Next action | Closure evidence |
+| --- | --- | --- |
+| 1 | Review the repeated detection mismatch and retest the original case type | The original case and every blocking related case pass the agreed acceptance criteria |
+| 2 | Name one escalation owner and update the SOP and handoff path | The response no longer waits for ownership to be assigned |
+| 3 | Record the request and the working configuration | Reassess only if the request repeats or the configuration stops delivering the required result |
 
-**Priority 2:** Recurring escalation ownership issue — clarify the operating process and track whether repeat resolution time improves.
-
-**Priority 3:** One-off request with a workable alternative — keep documented and schedule only if the need becomes more important or more common.
-
----
-
-This example is based on recurring patterns from real work. The issue wording and details are generalized so no confidential customer or internal information is exposed.
+The three rows combine recurring situations I handled. Customer identifiers, case counts, and internal backlog details are omitted.

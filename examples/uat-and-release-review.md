@@ -1,71 +1,56 @@
-# UAT & Release Review — Checking the Original Customer Scenario Again
+# UAT and Release Review — Returning to the Reported Scenario
 
-This is a generalized example of how I supported UAT and release validation for customer-facing product changes.
+Completing development did not close a customer-reported issue. I checked the change against the customer scenario that exposed the gap, recorded expected and observed results, retested after the fix, and based the release-readiness recommendation on those results.
 
-The key point for me was simple: if a change was made because of a real customer problem, the final check should go back to that same kind of scenario. Passing a technical test alone was not enough if the customer outcome was still wrong.
+## Scenario under review
 
-## Original scenario
+In a monitoring case, the returned person or vehicle classification—or a required attribute such as colour—did not match the reviewed scene. Monitoring staff used that output when handling the event, so a mismatch made the result unreliable.
 
-A customer workflow depended on a person or vehicle detection result. In some real cases, the result did not match what was expected from the scene.
+## Fields I recorded
 
-## What needed to be checked
-
-| Review point | What I looked for |
+| Review field | Required evidence |
 | --- | --- |
-| Expected result | What should the system return in this exact scenario? |
-| Actual result | What did the system return before the change? |
-| Failure type | Missed detection, wrong object type, attribute mismatch, or delayed result |
-| Reproducibility | Can the same issue be seen again using the same or a comparable scenario? |
-| Change made | What part of the behaviour was adjusted? |
-| Retest | Does the previously failing scenario now behave as expected? |
-| Remaining risk | Are there nearby edge cases that still fail or remain unclear? |
+| Test case | One traceable case ID and its source |
+| Expected result | The required object classification, attribute, and response time |
+| Before-change result | The exact result that exposed the failure |
+| Failure type | Missed detection, wrong object type, attribute mismatch, or late result |
+| Change tested | The build or version included in the retest |
+| Retest result | The result returned after the change |
+| Decision | Pass, fail, or blocked, with the reason |
+| Remaining blocker | Any release condition that has not passed |
 
-## Example review record
+## Reconstructed review record
 
-### Before the change
+The record below removes customer and product identifiers but keeps the decision logic.
 
-**Scenario:** A previously reported customer case is replayed or recreated using the same expected outcome.
+| Stage | Test input | Expected result | Observed result | Decision |
+| --- | --- | --- | --- | --- |
+| Before change | An approved replay of a previously failing vehicle case | Vehicle classification and the reviewed colour label | The vehicle is detected, but the colour label does not match the reviewed scene | **Fail — keep the case open** |
+| First retest | The same approved case after the change | Vehicle classification and the reviewed colour label | Both required results match the reviewed scene | **Pass for this case — continue the blocking test set** |
+| Release review | The normal case plus every previously failing case marked as blocking | Every case meets its recorded acceptance criteria | Result recorded separately for each case | **Release-ready only when every blocking case passes** |
 
-**Expected:** The correct person or vehicle result is returned and any required attribute is evaluated correctly.
+## Release-readiness rule
 
-**Observed:** The result does not fully match the expected scenario.
+I gave a release-ready recommendation only when:
 
-**Status:** Fail — keep open for clarification or correction.
+- the original mismatch could no longer be reproduced in the approved retest;
+- every blocking case passed its recorded acceptance criteria;
+- each failed case had a retest result from the build under review;
+- each known limitation listed its effect and owner;
+- the review record linked the expected result, observed result, and final status.
 
-### After the change
+An unresolved blocking case meant **Hold**, not Pass.
 
-**Retest:** The same type of scenario is checked again after Engineering and QA complete the change.
+## Checks after release
 
-**Expected:** The result now matches the documented requirement and acceptance criteria.
+I continued checking for:
 
-**Observed:** The previously failing case behaves as expected in retest.
+- a Jira complaint matching the same failure;
+- the same mismatch appearing in the repeat-incident tracker;
+- continued use of the manual workaround;
+- the same case type failing in customer operations;
+- a new edge case that needed its own requirement and test.
 
-**Status:** Pass for this scenario, subject to the remaining edge cases in scope.
+A passed UAT record did not close the problem if the same complaint returned after release.
 
-## Release recommendation
-
-I would recommend release only when:
-
-- the original problem can no longer be reproduced in the agreed test scenario;
-- the relevant acceptance criteria are met;
-- previously failing cases have been retested;
-- important edge cases in scope do not introduce a new failure;
-- any known limitation is documented clearly rather than hidden inside the test result.
-
-If one of those points was still unresolved, my recommendation would be to hold the release or clearly separate what was ready from what still needed work.
-
-## After release
-
-The review did not end at deployment. I would continue checking whether:
-
-- the same complaint returned from customers;
-- the same scenario appeared again in operations;
-- the workaround was still needed;
-- the change reduced the original service or customer impact;
-- a new edge case appeared that should go back into the requirement or backlog.
-
-That follow-up mattered because a release can pass UAT and still fail to solve the problem that started the work.
-
----
-
-This example is generalized from real product, QA, and customer-operations work. It does not include confidential customer data, internal test evidence, or proprietary product details.
+Customer identifiers, video or image evidence, internal thresholds, version numbers, and employer test records are omitted. The review fields, retest sequence, and release logic reflect work I handled.

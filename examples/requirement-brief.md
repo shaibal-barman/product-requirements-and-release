@@ -1,66 +1,89 @@
 # Requirement Brief — Making an AI Detection Requirement Testable
 
-This is a generalized example based on the kind of requirement and specification review I handled in customer-facing product work.
+A draft AI-detection requirement used two words that sounded specific—“correct” and “timely”—but neither gave Engineering a build target or QA a pass/fail rule. The questions below show how I removed that ambiguity before development and release review.
 
 ## Starting point
 
-A draft requirement said the system should return the correct person or vehicle detection result in a timely way.
+The draft effectively asked the system to return the correct person or vehicle detection result in a timely way.
 
-That sounds clear at first, but it leaves several questions unanswered. If those questions stay open, Engineering can build one interpretation and QA can test another.
+That wording did not define the object and attribute rules, timing target, treatment of mismatches, or cases QA needed to test.
 
-## Questions I would raise before calling the requirement ready
+## Questions I raised
 
-### 1. What does “timely” mean?
+### 1. What exact time limit applies?
 
-A requirement should not use words such as “fast” or “timely” unless the expected operating window is defined. The acceptable time may depend on the customer workflow, so the requirement should state the agreed expectation instead of leaving it to interpretation.
+The specification needed four details:
 
-### 2. What counts as a correct result?
+- the maximum allowed response time;
+- the event that starts the clock;
+- the event that stops the clock;
+- the pass/fail rule when the limit is missed.
 
-The requirement should separate the different parts of the result. For example:
+The internal timing target is not published here. In an active requirement, this field must contain a number and unit—not “fast” or “timely.”
 
-- Was a person or vehicle detected?
-- Was the object type correct?
-- If an attribute such as colour is required, did it match?
-- If one part is correct and another is wrong, is the overall result a pass or a failure?
+### 2. What makes the result correct?
 
-Without this distinction, a technically successful detection can still be wrong for the customer scenario.
+I separated the result into three decisions:
 
-### 3. Which scenarios must be tested?
+- **Base classification:** Does the result identify the expected person or vehicle?
+- **Required attribute:** If colour or another attribute is in scope, does it match the reviewed scene?
+- **Case status:** If either required result is wrong, does the case fail or move to manual review?
 
-The requirement should include the normal scenario and the important edge cases already seen in real customer use. A feature should not be considered ready only because it passes an ideal test case.
+Without separate rules, a detected vehicle with the wrong colour could be counted as correct even though the returned result did not match the customer’s case.
 
-### 4. What happens when the result is uncertain or mismatched?
+### 3. Which cases must QA test?
 
-If the system detects something but the result does not match the expected object or attribute, the requirement should define how that case is handled. It should not be silently counted as success.
+The test set needed:
 
-## Revised requirement structure
+- the normal customer scenario;
+- every previously failing customer scenario included in the release;
+- a case where the base classification is correct but a required attribute is wrong;
+- a case where the system cannot return a reliable match.
+
+Each case needed its expected output before testing began.
+
+### 4. How should a mismatch be recorded?
+
+The requirement had to state whether a mismatch was a failure, a manual-review result, or no reliable result. A mismatch could not be counted as a pass.
+
+## Rewritten requirement
 
 ### Problem
 
-Customers need the detection result to match the real operating scenario closely enough for the downstream monitoring workflow to rely on it.
+Monitoring staff use detection output to interpret a camera event. If the returned object type or required attribute does not match the reviewed scene, the output cannot support the intended monitoring decision.
 
 ### Expected behaviour
 
-- The system identifies the expected person or vehicle in the defined scenario.
-- Required attributes are evaluated separately from the base detection.
-- A mismatch is recorded as a mismatch rather than treated as a successful result.
-- The result is returned within the operating window agreed for the workflow.
+- Each approved test case has a known person or vehicle classification.
+- Each required attribute has a separate expected value.
+- The system returns the base classification and required attribute within the documented time limit.
+- A base-classification or required-attribute mismatch is recorded as a failure.
+- The test record keeps the expected and observed results separate.
 
 ### Acceptance criteria
 
-1. The expected person or vehicle classification matches the test scenario.
-2. Any required object or colour attribute is evaluated against the expected result.
-3. A required attribute mismatch is treated as a failed or review-needed case, not a pass.
-4. UAT includes both normal cases and previously observed customer edge cases.
-5. Failed cases are documented and retested after a change.
-6. A release recommendation is made only after the relevant previously failing scenarios are retested successfully.
+1. The expected base classification is recorded before the test starts.
+2. The returned person or vehicle classification matches the expected classification.
+3. Each required attribute matches the expected value.
+4. A base-classification or required-attribute mismatch receives a failed status.
+5. The UAT set includes the normal case and every blocking customer case that failed before the change.
+6. Every failed case records the case ID, expected result, observed result, and retest result.
+7. A release-readiness recommendation is given only after every blocking case passes. Any remaining limitation is listed with its effect and owner.
 
-## Why this mattered in practice
+## Evidence required in the review
 
-The value of the review was not rewriting the requirement to make it longer. It was removing the places where different teams could reasonably interpret the same sentence in different ways.
+| Field | Required entry |
+| --- | --- |
+| Test case ID | One traceable ID for the case |
+| Source | Customer report, approved replay, or recreated scenario |
+| Expected result | Base classification, required attribute, and time limit |
+| Observed result | The exact result returned during the test |
+| Status | Pass or fail with the reason |
+| Retest | Build or version tested, date, and result |
+| Owner | Person or team responsible for an unresolved failure |
 
-That made the requirement easier for Engineering to act on, easier for QA to test, and easier to compare against the original customer problem later.
+## Why the review mattered
 
----
+Before clarification, Engineering and QA could agree that the result should be “correct” and “timely” but still use different pass criteria. Defining each field gave Engineering a target and gave QA a recorded rule for pass, fail, and retest.
 
-This example is generalized from real work and does not reproduce confidential product specifications, customer data, or internal documentation.
+This file reconstructs the structure of the review. Customer names, product names, the internal timing target, test media, and employer documents are not included.
