@@ -1,12 +1,12 @@
 # Requirement Brief — Making an AI Detection Requirement Testable
 
-A draft AI-detection requirement used two words that sounded specific—“correct” and “timely”—but neither gave Engineering a build target or QA a pass/fail rule. The questions below show how I removed that ambiguity before development and release review.
+I reviewed a draft AI-detection requirement that used “correct” and “timely” without defining either term. Engineering had no single build target, and QA had no pass/fail rule. I raised the following questions before development and release review.
 
 ## Starting point
 
-The draft effectively asked the system to return the correct person or vehicle detection result in a timely way.
+The draft asked the system to return the correct person or vehicle detection result in a timely way.
 
-That wording did not define the object and attribute rules, timing target, treatment of mismatches, or cases QA needed to test.
+It did not define the object and attribute rules, timing target, treatment of mismatches, or cases QA needed to test.
 
 ## Questions I raised
 
@@ -19,15 +19,15 @@ The specification needed four details:
 - the event that stops the clock;
 - the pass/fail rule when the limit is missed.
 
-The internal timing target is not published here. In an active requirement, this field must contain a number and unit—not “fast” or “timely.”
+I have left out the internal timing target. In the working specification, the field needed a number and unit—not “fast” or “timely.”
 
 ### 2. What makes the result correct?
 
 I separated the result into three decisions:
 
-- **Base classification:** Does the result identify the expected person or vehicle?
-- **Required attribute:** If colour or another attribute is in scope, does it match the reviewed scene?
-- **Case status:** If either required result is wrong, does the case fail or move to manual review?
+- **Base classification:** Did the system identify the expected person or vehicle?
+- **Required attribute:** If colour or another attribute was in scope, did it match the reviewed scene?
+- **Case status:** If either required result was wrong, did the case fail or move to manual review?
 
 Without separate rules, a detected vehicle with the wrong colour could be counted as correct even though the returned result did not match the customer’s case.
 
@@ -37,8 +37,8 @@ The test set needed:
 
 - the normal customer scenario;
 - every previously failing customer scenario included in the release;
-- a case where the base classification is correct but a required attribute is wrong;
-- a case where the system cannot return a reliable match.
+- a case where the base classification was correct but a required attribute was wrong;
+- a case where the system could not return a reliable match.
 
 Each case needed its expected output before testing began.
 
@@ -50,7 +50,7 @@ The requirement had to state whether a mismatch was a failure, a manual-review r
 
 ### Problem
 
-Monitoring staff use detection output to interpret a camera event. If the returned object type or required attribute does not match the reviewed scene, the output cannot support the intended monitoring decision.
+Monitoring staff use the detection result to interpret a camera event. If the returned object type or required attribute does not match the reviewed scene, they cannot rely on that result when deciding how to respond.
 
 ### Expected behaviour
 
@@ -68,7 +68,7 @@ Monitoring staff use detection output to interpret a camera event. If the return
 4. A base-classification or required-attribute mismatch receives a failed status.
 5. The UAT set includes the normal case and every blocking customer case that failed before the change.
 6. Every failed case records the case ID, expected result, observed result, and retest result.
-7. A release-readiness recommendation is given only after every blocking case passes. Any remaining limitation is listed with its effect and owner.
+7. Every blocking case passes before the change receives a release-ready recommendation. Each remaining limitation records its effect and owner.
 
 ## Evidence required in the review
 
@@ -84,6 +84,6 @@ Monitoring staff use detection output to interpret a camera event. If the return
 
 ## Why the review mattered
 
-Before clarification, Engineering and QA could agree that the result should be “correct” and “timely” but still use different pass criteria. Defining each field gave Engineering a target and gave QA a recorded rule for pass, fail, and retest.
+Before I clarified the wording, Engineering and QA could agree that the result should be “correct” and “timely” but still use different pass criteria. Defining each field gave Engineering a target and gave QA a recorded rule for pass, fail, and retest.
 
-This file reconstructs the structure of the review. Customer names, product names, the internal timing target, test media, and employer documents are not included.
+I rebuilt this brief without customer or product names. The internal timing target, test media, and employer documents are not included.

@@ -1,10 +1,10 @@
 # UAT and Release Review — Returning to the Reported Scenario
 
-Completing development did not close a customer-reported issue. I checked the change against the customer scenario that exposed the gap, recorded expected and observed results, retested after the fix, and based the release-readiness recommendation on those results.
+Development being complete did not mean the customer issue was closed. I returned to the scenario that exposed the gap, recorded what should have happened and what happened before the fix, retested after the change, and used those results for the release recommendation.
 
 ## Scenario under review
 
-In a monitoring case, the returned person or vehicle classification—or a required attribute such as colour—did not match the reviewed scene. Monitoring staff used that output when handling the event, so a mismatch made the result unreliable.
+In the record below, the system detected a vehicle but returned a colour label that did not match the reviewed scene. Monitoring staff used that output when handling the event, so the result could not be treated as correct.
 
 ## Fields I recorded
 
@@ -19,9 +19,7 @@ In a monitoring case, the returned person or vehicle classification—or a requi
 | Decision | Pass, fail, or blocked, with the reason |
 | Remaining blocker | Any release condition that has not passed |
 
-## Reconstructed review record
-
-The record below removes customer and product identifiers but keeps the decision logic.
+## Review record with identifying details removed
 
 | Stage | Test input | Expected result | Observed result | Decision |
 | --- | --- | --- | --- | --- |
@@ -31,7 +29,7 @@ The record below removes customer and product identifiers but keeps the decision
 
 ## Release-readiness rule
 
-I gave a release-ready recommendation only when:
+I recommended release only when:
 
 - the original mismatch could no longer be reproduced in the approved retest;
 - every blocking case passed its recorded acceptance criteria;
@@ -45,12 +43,12 @@ An unresolved blocking case meant **Hold**, not Pass.
 
 I continued checking for:
 
-- a Jira complaint matching the same failure;
-- the same mismatch appearing in the repeat-incident tracker;
+- a new Jira complaint matching the same failure;
+- the same mismatch in the repeat-incident tracker;
 - continued use of the manual workaround;
 - the same case type failing in customer operations;
 - a new edge case that needed its own requirement and test.
 
 A passed UAT record did not close the problem if the same complaint returned after release.
 
-Customer identifiers, video or image evidence, internal thresholds, version numbers, and employer test records are omitted. The review fields, retest sequence, and release logic reflect work I handled.
+This record keeps the test logic but leaves out customer identifiers, video or image evidence, internal thresholds, version numbers, and employer test files.

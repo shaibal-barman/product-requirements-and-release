@@ -1,8 +1,8 @@
 # Product Requirements to Release
 
-Issues reached me as wrong customer results, operations workarounds, or requirements that Engineering and QA interpreted differently.
+My work on product requirements began when the system returned the wrong result for a customer, the operations team needed a manual workaround, or Engineering and QA read the same requirement differently.
 
-My responsibility was to document the original scenario, separate expected from observed behaviour, rank competing issues, test proposed changes in customer workflows, coordinate retesting with QA, and check whether the released change solved the reported problem.
+I documented the original case, wrote down what should have happened and what the system returned, helped rank competing issues, tested changes in customer workflows, coordinated retesting with QA, and checked whether the release solved the reported problem.
 
 ## Workflow I followed
 
@@ -17,43 +17,43 @@ flowchart TD
     G --> H[Track recurrence after release]
 ```
 
-A complaint did not automatically become an Engineering task. I checked whether the gap came from product behaviour, configuration, a service process, unclear ownership, or communication. That decision identified the owner, next action, and evidence needed for closure.
+A complaint did not automatically become an Engineering task. I first checked whether the cause came from product behaviour, configuration, service process, ownership, or communication. That showed who needed to act and what evidence would prove the issue was resolved.
 
 ## Work samples
 
 ### 1. Requirement review
 
-Starts with an AI-detection requirement containing two undefined words—“correct” and “timely”—then adds the missing test conditions, acceptance criteria, and release evidence.
+Shows how I replaced the undefined words “correct” and “timely” in an AI-detection requirement with test conditions, acceptance criteria, and the evidence needed before release.
 
 [See the requirement brief →](examples/requirement-brief.md)
 
 ### 2. Prioritization
 
-Compares three competing issues: repeated detection errors, unclear escalation ownership, and a one-time request with a working alternative. It records why each issue received its place in the queue.
+Shows how I ordered three competing issues: repeated detection errors, an escalation with no named owner, and a one-time request with a working alternative.
 
 [See the prioritization record →](examples/prioritization-example.md)
 
 ### 3. UAT and release review
 
-Follows a reported detection problem from expected-versus-observed behaviour through retesting and a release-readiness decision.
+Shows how I returned to the reported customer scenario, compared expected and observed behaviour, retested the change, and made a release-readiness decision.
 
 [See the UAT and release review →](examples/uat-and-release-review.md)
 
-## Checks I used before recommending a requirement as ready
+## Questions I asked before recommending a requirement as ready
 
-- Is the reported case documented with enough evidence for another person to reproduce it?
-- Are the expected and observed results written separately?
-- Does every timing or accuracy term have a defined target and measurement method?
-- Can QA mark each acceptance criterion as pass or fail without interpreting the wording?
-- Do the test cases include previously failing scenarios and known edge cases?
-- Are the owner and delivery dependencies named?
-- Is the post-release signal defined, such as a repeat complaint, mismatch rate, or continued workaround?
+- Could another person reproduce the reported case from the evidence provided?
+- Were the expected and observed results written separately?
+- Did each timing or accuracy term have a defined target and measurement method?
+- Could QA mark each acceptance criterion as pass or fail without interpreting the wording?
+- Did the test set include previously failing scenarios and known edge cases?
+- Were the owner and delivery dependencies named?
+- Did we know what to check after release—repeat complaints, mismatch rate, or continued use of a workaround?
 
 ## My role
 
-I did not write production code. I reviewed requirements from the customer and operations side, flagged unclear timing and missing scenarios before development, documented object and colour mismatches, worked with Product, Engineering, and QA, tested changes in customer workflows, retested fixes, and shared a release-readiness recommendation.
+I did not write production code. I reviewed requirements from the customer and operations side, flagged unclear timing and missing scenarios before development, documented object and colour mismatches, worked with Product, Engineering, and QA, tested changes in customer workflows, retested fixes, and made a release recommendation from the test results.
 
-These files are reconstructed work samples, not copies of an employer’s documents. Customer names, product names, screenshots, internal targets, and proprietary specifications are omitted. The problem-solving steps and decision criteria reflect work I handled.
+I wrote these samples from work I handled; they are not copies of employer documents. I left out customer and product names, screenshots, internal targets, and proprietary specifications.
 
 ## Author
 
