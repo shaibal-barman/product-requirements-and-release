@@ -57,4 +57,4 @@ The examples in this repository are generalized from real work. They do not cont
 ## Author
 
 **Shaibal Barman**  
-[LinkedIn](https://www.linkedin.com/in/shaibal-barman) · [Portfolio](https://shaibalbarman.netlify.app)
+[LinkedIn](https://www.linkedin.com/in/shaibal-barman) · [Portfolio](https://shaibal-portfolio.brmnshaibal.workers.dev/)
